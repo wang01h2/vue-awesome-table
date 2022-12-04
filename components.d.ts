@@ -7,7 +7,19 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AButton: typeof import('ant-design-vue/es')['Button']
+    AButton: typeof import('@arco-design/web-vue')['Button']
+    ACard: typeof import('@arco-design/web-vue')['Card']
+    ACol: typeof import('@arco-design/web-vue')['Col']
+    AForm: typeof import('@arco-design/web-vue')['Form']
+    AFormItem: typeof import('@arco-design/web-vue')['FormItem']
+    AInput: typeof import('@arco-design/web-vue')['Input']
+    AInputGroup: typeof import('@arco-design/web-vue')['InputGroup']
+    AOption: typeof import('@arco-design/web-vue')['Option']
+    ARow: typeof import('@arco-design/web-vue')['Row']
+    ASelect: typeof import('@arco-design/web-vue')['Select']
+    ASpace: typeof import('@arco-design/web-vue')['Space']
+    ATable: typeof import('@arco-design/web-vue')['Table']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    Table: typeof import('./src/components/Table.vue')['default']
   }
 }
