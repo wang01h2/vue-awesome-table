@@ -70,6 +70,9 @@ const data = reactive([{
 function onLoad(query: {}) {
   console.log('query', query)
 }
+const reset = (data: {}) => {
+  console.log('reset', data)
+}
 </script>
 
 <template>
@@ -83,7 +86,7 @@ function onLoad(query: {}) {
       <code>components/HelloWorld.vue</code> to test HMR
     </p>
   </div>
-  <Table :columns="columns" :data="data" @search="onLoad" />
+  <Table :columns="columns" :data="data" @search="onLoad" @reset="reset" />
   <p>
     Check out
     <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">create-vue</a>, the official Vue + Vite

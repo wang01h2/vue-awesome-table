@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { markRaw, reactive, ref } from 'vue'
 
 interface Props {
   columns: any[]
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-defineEmits(['search'])
+const emit = defineEmits(['search', 'reset'])
 const tableData = reactive({ form: {}, searchColumns: [] as any[] })
 /*
 * 封装思想
@@ -22,30 +22,41 @@ const form = props.columns.filter(item => item.search).map(item => item.dataInde
 }, {})
 tableData.form = form
 tableData.searchColumns = props.columns.filter(item => item.search)
-console.log('form', form)
+const formRef = ref()
+const onReset = () => {
+  formRef.value.resetFields()
+  const res = markRaw(Object.assign({}, tableData.form))
+  emit('reset', res)
+}
 </script>
 
 <template>
   <a-card :style="{ width: '100%' }" :bordered="false">
     <a-form ref="formRef" :model="tableData.form">
       <a-row :gutter="16">
-        <a-col v-for="(item, index) in tableData.searchColumns" :key="index" :span="8">
-          <a-form-item field="value1" :label="item.title" label-col-flex="100px">
-            <a-input v-if="item.type === 'input' || !item.type" v-model="tableData.form[item.dataIndex]" placeholder="please enter..." />
-            <a-select v-if="item.type === 'select'" v-model="tableData.form[item.dataIndex]" :style="{ width: '320px' }" placeholder="Please select ..." allow-clear>
+        <a-col v-for="(item, index) in tableData.searchColumns" :key="index" :span="6">
+          <a-form-item :field="item.dataIndex" :label="item.title" label-col-flex="100px">
+            <a-input
+              v-if="item.type === 'input' || !item.type" v-model="tableData.form[item.dataIndex]"
+              placeholder="please enter..."
+            />
+            <a-select
+              v-if="item.type === 'select'" v-model="tableData.form[item.dataIndex]" :style="{ width: '320px' }"
+              placeholder="Please select ..." allow-clear
+            >
               <a-option v-for="(item2, index2) in data" :key="index2">
                 {{ item2.name }}
               </a-option>
             </a-select>
           </a-form-item>
         </a-col>
-        <a-col :span="8">
+        <a-col :span="6">
           <a-form-item>
             <a-space>
               <a-button html-type="submit" @click="$emit('search', tableData.form)">
                 Search
               </a-button>
-              <a-button @click="$refs.formRef.resetFields()">
+              <a-button @click="onReset">
                 Reset
               </a-button>
             </a-space>
