@@ -8,7 +8,7 @@ interface Props {
 
 const props = defineProps<Props>()
 defineEmits(['search'])
-const tableData = reactive({ form: {}, searchColumns: [] as any })
+const tableData = reactive({ form: {}, searchColumns: [] as any[] })
 /*
 * 封装思想
 *
