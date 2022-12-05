@@ -9,10 +9,7 @@ interface Props {
 const props = defineProps<Props>()
 const emit = defineEmits(['search', 'reset'])
 const tableData = reactive({ form: {}, searchColumns: [] as any[] })
-/*
-* 封装思想
-*
-* */
+
 const handleChange = (data: any[], extra: any) => {
   console.log('change', data, extra)
 }
